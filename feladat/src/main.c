@@ -15,8 +15,6 @@
 #include "../include/shadow.h"
 #include "../include/game.h"
 
-// makefile gcc main.c texture.c model_loader.c collision.c shadow.c -o program.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lopengl32 -lglu32
-
 int map[N_NUM][N_NUM] = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 1, 0, 1, 1, 0, 1, 1, 1, 0},
@@ -33,7 +31,7 @@ int map[N_NUM][N_NUM] = {
 SDL_Window *window = NULL;
 SDL_GLContext context;
 GLuint texture;
-Model* woodBox = NULL;
+Model *woodBox = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -70,16 +68,23 @@ int main(int argc, char *argv[])
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG);
     texture = loadTexture("./assets/texture.jpg");
 
+    GLuint help_texture;
+    int show_help = 0;
+    help_texture = loadTexture("./assets/help.png");
+
     woodBox = loadOBJ("./assets/wood_box.obj");
-    if (woodBox) {
+    if (woodBox)
+    {
         woodBox->textureID = loadTexture("./assets/wood_box_texture.png");
-        if (woodBox->textureID == 0) {
+        if (woodBox->textureID == 0)
+        {
             printf("Failed to load wood box texture!\n");
         }
-    }   
+    }
 
     glViewport(0, 0, WIDTH, HEIGHT);
     glEnable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
@@ -107,7 +112,8 @@ int main(int argc, char *argv[])
 
     SDL_Event event;
     int running = 1;
-
+    int mouse_on_off = 1;
+    float light_intensity = 0.0f;
     float ball_x = 7.5f, ball_y = 1.0f, ball_z = 8.0f;
     float ball_speed = 5.0f;
     float roll_x = 0.0f, roll_z = 0.0f;
@@ -154,6 +160,22 @@ int main(int argc, char *argv[])
                     cam_pitch = 1.5f;
                 if (cam_pitch < -1.5f)
                     cam_pitch = -1.5f;
+            }
+            if (event.type == SDL_KEYDOWN)
+            {
+                if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+                {
+                    mouse_on_off = !mouse_on_off;
+                    SDL_SetRelativeMouseMode(mouse_on_off ? SDL_TRUE : SDL_FALSE);
+                }
+            }
+
+            if (event.type == SDL_KEYDOWN)
+            {
+                if (event.key.keysym.scancode == SDL_SCANCODE_F1)
+                {
+                    show_help = !show_help;
+                }
             }
         }
 
@@ -207,10 +229,6 @@ int main(int argc, char *argv[])
                 roll_z += distance * 50.0f;
             }
         }
-        if (keys[SDL_SCANCODE_ESCAPE])
-        {
-            SDL_SetRelativeMouseMode(SDL_FALSE);
-        }
 
         float rot_speed = 2.0f;
         if (keys[SDL_SCANCODE_Q])
@@ -247,21 +265,36 @@ int main(int argc, char *argv[])
                 switch (map[i][j])
                 {
                 case 0:
-                    if (woodBox) {
+                    if (woodBox)
+                    {
                         glPushMatrix();
                         glTranslatef(j * SIZE + (SIZE / 2.0f), 1.0f, i * SIZE + (SIZE / 2.0f));
+                        glDisable(GL_CULL_FACE);
                         glEnable(GL_TEXTURE_2D);
                         glBindTexture(GL_TEXTURE_2D, woodBox->textureID);
-                        glColor3f(1.0f, 1.0f, 1.0f);
+                        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                         glBegin(GL_TRIANGLES);
-                        for (int f = 0; f < woodBox->f_count; f++) {
-                            for (int v = 0; v < 3; v++) {
-                                int vt_idx = woodBox->faces[f].vt[v] - 1;
-                                int v_idx = woodBox->faces[f].v[v] - 1;
-                                glTexCoord2f(woodBox->texcoords[vt_idx].u, woodBox->texcoords[vt_idx].v);
-                                glVertex3f(woodBox->vertices[v_idx].x, woodBox->vertices[v_idx].y, woodBox->vertices[v_idx].z);
+
+                        for (int f = 0; f < woodBox->f_count; f++)
+                        {
+
+                            for (int v = 0; v < 3; v++)
+                            {
+
+                                int vt_idx = woodBox->faces[f].vt[v];
+                                int v_idx = woodBox->faces[f].v[v];
+
+                                glTexCoord2f(
+                                    woodBox->texcoords[vt_idx].u,
+                                    woodBox->texcoords[vt_idx].v);
+
+                                glVertex3f(
+                                    woodBox->vertices[v_idx].x,
+                                    woodBox->vertices[v_idx].y,
+                                    woodBox->vertices[v_idx].z);
                             }
                         }
+
                         glEnd();
                         glPopMatrix();
                     }
@@ -308,15 +341,15 @@ int main(int argc, char *argv[])
 
         // Shadow rendering
         GLfloat ground[] = {0.0f, 1.0f, 0.0f, 0.0f};
-        GLfloat light[] = {-1.0f, -1.0f, -1.0f, 0.0f};
+        GLfloat light[] = {0.0f, 0.0f, 0.0f, 0.0f};
         GLfloat shadowMat[16];
         shadowMatrix(shadowMat, ground, light);
 
         glDisable(GL_LIGHTING);
-        glColor4f(0, 0, 0, 0.9f);
+        glColor4f(0, 0, 0, light_intensity);
         glPushMatrix();
         glMultMatrixf(shadowMat);
-        glTranslatef(0.0f, 0.1f, 0.0f);
+        glTranslatef(0.0f, 0.1f, 1.0f);
         glTranslatef(ball_x, ball_y, ball_z);
         glRotatef(roll_x, 1, 0, 0);
         glRotatef(roll_z, 0, 0, 1);
@@ -326,7 +359,48 @@ int main(int argc, char *argv[])
         glPopMatrix();
         glEnable(GL_LIGHTING);
 
+        if (show_help)
+        {
+            glDisable(GL_LIGHTING);
+            glDisable(GL_DEPTH_TEST);
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, help_texture);
+            glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            glMatrixMode(GL_PROJECTION);
+            glPushMatrix();
+            glLoadIdentity();
+            glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            glLoadIdentity();
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0);
+            glVertex2f(0, 0);
+            glTexCoord2f(1, 0);
+            glVertex2f(WIDTH, 0);
+            glTexCoord2f(1, 1);
+            glVertex2f(WIDTH, HEIGHT);
+            glTexCoord2f(0, 1);
+            glVertex2f(0, HEIGHT);
+            glEnd();
+            glPopMatrix();
+            glMatrixMode(GL_PROJECTION);
+            glPopMatrix();
+            glMatrixMode(GL_MODELVIEW);
+
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_LIGHTING);
+        }
+
         SDL_GL_SwapWindow(window);
+    }
+    glDeleteTextures(1, &texture);
+    glDeleteTextures(1, &help_texture);
+
+    if (woodBox)
+    {
+        glDeleteTextures(1, &(woodBox->textureID));
+        freeModel(woodBox);
     }
 
     SDL_GL_DeleteContext(context);
