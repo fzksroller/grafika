@@ -54,6 +54,7 @@ feladat/<br>
 │&nbsp&nbsp&nbsp&nbsp├── shadow.h<br>
 │&nbsp&nbsp&nbsp&nbsp└── game.h<br>
 ├── assets/<br>
+│&nbsp&nbsp&nbsp&nbsp├── help.png<br>
 │&nbsp&nbsp&nbsp&nbsp├── texture.jpg<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.obj<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.mtl<br>
@@ -64,7 +65,7 @@ feladat/<br>
 <h2>Asset-ek</h2>
 <hr>
 <p>Az alábbi linken megtalálhatóak a programhoz használt asset-ek .zip formátumba tömörítve.<br>(A program az asset-ek nélkül is használható.)</p>
-<a href="https://drive.google.com/file/d/1NU5UzoTfuFGUAPGJbFAqpruhD2nLVtpP/view?usp=drive_link">https://drive.google.com/file/d/1NU5UzoTfuFGUAPGJbFAqpruhD2nLVtpP/view?usp=drive_link</a>
+<a href="https://drive.google.com/drive/folders/1G70U9NmCNc_fNXtVzun4r4gMDLDyDk0X?usp=sharing">https://drive.google.com/file/d/1NU5UzoTfuFGUAPGJbFAqpruhD2nLVtpP/view?usp=drive_link</a>
 <hr>
 <h2>Irányíás</h2>
 <hr>
