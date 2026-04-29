@@ -54,6 +54,7 @@ feladat/<br>
 │&nbsp&nbsp&nbsp&nbsp├── shadow.h<br>
 │&nbsp&nbsp&nbsp&nbsp└── game.h<br>
 ├── assets/<br>
+│&nbsp&nbsp&nbsp&nbsp├── help.png<br>
 │&nbsp&nbsp&nbsp&nbsp├── texture.jpg<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.obj<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.mtl<br>
