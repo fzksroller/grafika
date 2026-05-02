@@ -1,6 +1,5 @@
 #include "../include/collision.h"
 
-extern int map[10][10];
 #define SIZE 5
 #define N_NUM 10
 

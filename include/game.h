@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "model.h"
+
 #define WIDTH 800
 #define HEIGHT 600
 #define SIZE 5
