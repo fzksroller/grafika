@@ -4,7 +4,8 @@
 #include "vec3.h"
 #include <GL/gl.h>
 
-typedef struct {
+typedef struct
+{
     Vec3 *vertices;
     Vec2 *texcoords;
     Face *faces;

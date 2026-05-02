@@ -29,15 +29,19 @@ GLuint loadTexture(const char *path)
     return tex;
 }
 
-char* getTexturePathFromMTL(const char* mtlPath) {
-    FILE* file = fopen(mtlPath, "r");
-    if (!file) return NULL;
+char *getTexturePathFromMTL(const char *mtlPath)
+{
+    FILE *file = fopen(mtlPath, "r");
+    if (!file)
+        return NULL;
 
     static char textureFileName[256];
     char line[256];
 
-    while (fgets(line, sizeof(line), file)) {
-        if (strncmp(line, "map_Kd ", 7) == 0) {
+    while (fgets(line, sizeof(line), file))
+    {
+        if (strncmp(line, "map_Kd ", 7) == 0)
+        {
             sscanf(line, "map_Kd %s", textureFileName);
             fclose(file);
             return textureFileName;

@@ -3,7 +3,7 @@
 
 #include "model.h"
 
-Model* loadOBJ(const char* path);
-void freeModel(Model* model);
+Model *loadOBJ(const char *path);
+void freeModel(Model *model);
 
 #endif

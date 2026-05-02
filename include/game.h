@@ -6,12 +6,8 @@
 #define WIDTH 800
 #define HEIGHT 600
 #define SIZE 5
-#define N_NUM 10
+#define N_NUM 20
 
-extern int map[N_NUM][N_NUM];
-extern SDL_Window *window;
-extern SDL_GLContext context;
-extern GLuint texture;
-extern Model* woodBox;
+int map[N_NUM][N_NUM];
 
 #endif

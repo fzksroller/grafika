@@ -112,8 +112,10 @@ Model *loadOBJ(const char *path)
     return m;
 }
 
-void freeModel(Model* model) {
-    if (model != NULL) {
+void freeModel(Model *model)
+{
+    if (model != NULL)
+    {
         free(model->vertices);
         free(model->texcoords);
         free(model->faces);

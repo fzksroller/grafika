@@ -9,6 +9,6 @@
 #include <GL/gl.h>
 
 GLuint loadTexture(const char *path);
-char* getTexturePathFromMTL(const char* mtlPath);
+char *getTexturePathFromMTL(const char *mtlPath);
 
 #endif

@@ -4,7 +4,8 @@
 #include <GL/gl.h>
 #include <stdbool.h>
 
-typedef struct {
+typedef struct
+{
     float x, y, z;
     float speed;
     bool active;
