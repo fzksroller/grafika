@@ -1,18 +1,18 @@
 # grafika
 <center>
-<h1>2026_2_szamitogepi_grafika gyakorlati feladatok / beadando</h1>
+<h1>2026_2_szamitogepi_grafika beadando <br> Impossible Labyrinth</h1>
 <hr>
 <h2>A beadandó célja</h2>
 <hr>
-<p>Egy TPS (third-person view) nézetből irányítható golyót eljuttatni a pája ¨kezdő pontjától¨ a célig.</p>
+<p>- A 20x20-as pályán eljutni egy golyóval a sötétkék színnel jelölt mezőre (cél), azonban három másodpercenként cserélődik a padló véletlenszerűen.</p>
+<p>- A padlón lévő piros mezők visszaléptetik a golyót a kezdőpontra.</p>
 <h3>A programmal a számítógépi grafika alábbi részeit szeretném szemléltetni, felhasználni:</h3>
 <ul>
   <li>kamerakezelés</li>
-  <li>objektumok</li>
-  <li>textúrák</li>
-  <li>fények</li>
+  <li>objektumok implementálása</li>
+  <li>textúrák implementálása</li>
   <li>átlátszóság</li>
-  <li>árnyék</li>
+  <li>árnyékolás</li>
   <li>ütközésvizsgálat</li>
 </ul>
 <hr>
@@ -44,17 +44,24 @@ feladat/<br>
 │&nbsp&nbsp&nbsp&nbsp├── texture.c&nbsp&nbsp&nbsp&nbsp(textúra függvények)<br>
 │&nbsp&nbsp&nbsp&nbsp├── model_loader.c&nbsp&nbsp&nbsp&nbsp(OBJ betöltés)<br>
 │&nbsp&nbsp&nbsp&nbsp├── collision.c&nbsp&nbsp&nbsp&nbsp(ütközésvizsgálat)<br>
-│&nbsp&nbsp&nbsp&nbsp└── shadow.c&nbsp&nbsp&nbsp&nbsp(árnyék függvények)<br>
+│&nbsp&nbsp&nbsp&nbsp├── rain.c&nbsp&nbsp&nbsp&nbsp<br>
+│&nbsp&nbsp&nbsp&nbsp├── math3d.c&nbsp&nbsp&nbsp&nbsp<br>
+│&nbsp&nbsp&nbsp&nbsp├── app.c&nbsp&nbsp&nbsp&nbsp<br>
+│&nbsp&nbsp&nbsp&nbsp└── shadow_simple.c&nbsp&nbsp&nbsp&nbsp(árnyék függvények)<br>
 ├── include/<br>
 │&nbsp&nbsp&nbsp&nbsp├── vec3.h<br>
+│&nbsp&nbsp&nbsp&nbsp├── app.h<br>
+│&nbsp&nbsp&nbsp&nbsp├── math3d.h<br>
+│&nbsp&nbsp&nbsp&nbsp├── rain.h<br>
 │&nbsp&nbsp&nbsp&nbsp├── model.h<br>
 │&nbsp&nbsp&nbsp&nbsp├── texture.h<br>
 │&nbsp&nbsp&nbsp&nbsp├── model_loader.h<br>
 │&nbsp&nbsp&nbsp&nbsp├── collision.h<br>
-│&nbsp&nbsp&nbsp&nbsp├── shadow.h<br>
+│&nbsp&nbsp&nbsp&nbsp├── shadow_simple.h<br>
 │&nbsp&nbsp&nbsp&nbsp└── game.h<br>
 ├── assets/<br>
 │&nbsp&nbsp&nbsp&nbsp├── help.png<br>
+│&nbsp&nbsp&nbsp&nbsp├── win.png<br>
 │&nbsp&nbsp&nbsp&nbsp├── texture.jpg<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.obj<br>
 │&nbsp&nbsp&nbsp&nbsp├── wood_box.mtl<br>
@@ -78,19 +85,34 @@ feladat/<br>
 </tr>
 <tr>
   <td>W - Előremenet</td>
-  <td>Q - Kamera elforgatás balra</td>
-</tr>
-  <tr>
-  <td>A - Balramenet</td>
-  <td>E - Kamera elforgatás jobbra</td>
-</tr>
-  <tr>
-  <td>S - Hátramenet</td>
   <td>F1 - Súgó</td>
 </tr>
   <tr>
-  <td>D - Jobbramenet</td>
+  <td>A - Balramenet</td>
+  <td>F2 - Pálya újragenerálása</td>
+</tr>
+  <tr>
+  <td>S - Hátramenet</td>
   <td>Esc - Egér feloldása</td>
+</tr>
+  <tr>
+  <td>D - Jobbramenet</td>
+  <td>R - eső ki/be kapcsolása</td>
+</tr>
+</tr>
+  <tr>
+  <td>Space - respawn</td>
+  <td>T - árnyék ki/be kapcsolása</td>
+</tr>
+</tr>
+  <tr>
+  <td>Q - Kamera elforgatás balra</td>
+  <td>Egér - Kamera mozgatás</td>
+</tr>
+</tr>
+  <tr>
+  <td>E - Kamera elforgatás jobbra</td>
+  <td>&nbsp</td>
 </tr>
 </table>
 </center>

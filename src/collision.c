@@ -92,8 +92,6 @@ void updateMapRandomlyBox(void)
         map[0][i] = 1;
         map[N_NUM - 1][i] = 1;
     }
-    map[1][1] = 4;
-    map[8][8] = 5;
 }
 void updateMapRandomlyTrap(float dt)
 {
@@ -134,8 +132,6 @@ void updateMapRandomlyTrap(float dt)
             map[0][i] = 1;
             map[N_NUM - 1][i] = 1;
         }
-        map[1][1] = 4;
-        map[8][8] = 5;
     }
 }
 

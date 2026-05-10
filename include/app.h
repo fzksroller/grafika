@@ -28,6 +28,7 @@ void getCameraPosition(GameState* state, float cam_dist, float* camX, float* cam
 void cleanupGame(void);
 int checkWinCondition(GameState* state);
 void updateCameraCollision(GameState* state, float* camX, float* camY, float* camZ);
-void setGlobalResources(GLuint tex, GLuint helpTex, Model* box);
+void setGlobalResources(GLuint tex, GLuint helpTex, Model* box, GLuint bgTex);
+void drawBackground(void);
 
 #endif

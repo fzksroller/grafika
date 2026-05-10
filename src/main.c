@@ -19,7 +19,7 @@
 
 int map[N_NUM][N_NUM] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 4, 4, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -44,6 +44,7 @@ SDL_GLContext context;
 GLuint texture;
 Model *woodBox = NULL;
 GLuint help_texture;
+GLuint bg_texture;
 
 void initOpenGL(void)
 {
@@ -110,6 +111,7 @@ void loadResources(void)
 {
     texture = loadTexture("./assets/texture.jpg");
     help_texture = loadTexture("./assets/help.png");
+    bg_texture = loadTexture("./assets/bg.png");
 
     woodBox = loadOBJ("./assets/wood_box.obj");
     if (woodBox)
@@ -121,7 +123,7 @@ void loadResources(void)
         }
     }
 
-    setGlobalResources(texture, help_texture, woodBox);
+    setGlobalResources(texture, help_texture, woodBox, bg_texture);
 }
 
 void cleanupResources(void)
@@ -187,7 +189,7 @@ int main(int argc, char *argv[])
     SDL_SetRelativeMouseMode(SDL_TRUE);
 
     window = SDL_CreateWindow(
-        "FRI - beadando",
+        "Fazekas Roland Istvan - Impossible Labyrinth",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         WIDTH,
@@ -265,7 +267,7 @@ int main(int argc, char *argv[])
                     GLuint new_help = loadTexture("./assets/help.png");
                     glDeleteTextures(1, &help_texture);
                     help_texture = new_help;
-                    setGlobalResources(texture, help_texture, woodBox);
+                    setGlobalResources(texture, help_texture, woodBox, bg_texture);
                     SDL_SetRelativeMouseMode(SDL_TRUE);
                     gameState.mouse_on_off = 1;
                 }
@@ -292,7 +294,7 @@ int main(int argc, char *argv[])
                 {
                     glDeleteTextures(1, &help_texture);
                     help_texture = win_texture;
-                    setGlobalResources(texture, help_texture, woodBox);
+                    setGlobalResources(texture, help_texture, woodBox, bg_texture);
                 }
                 SDL_SetRelativeMouseMode(SDL_FALSE);
                 gameState.mouse_on_off = 0;

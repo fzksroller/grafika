@@ -12,12 +12,14 @@
 static GLuint help_texture;
 static GLuint texture;
 static Model *woodBox;
+static GLuint bg_texture;
 
-void setGlobalResources(GLuint tex, GLuint helpTex, Model *box)
+void setGlobalResources(GLuint tex, GLuint helpTex, Model *box, GLuint bgTex)
 {
     texture = tex;
     help_texture = helpTex;
     woodBox = box;
+    bg_texture = bgTex;
 }
 
 void initGame(GameState *state)
@@ -340,6 +342,8 @@ void renderScene(GameState *state, float camX, float camY, float camZ)
     glLoadIdentity();
     lookAt(camX, camY, camZ, state->x, state->y, state->z, 0, 1, 0);
 
+    drawBackground();
+
     GLfloat light0_pos[] = {10.0f, 20.0f, 10.0f, 1.0f};
     GLfloat light1_pos[] = {0.0f, -5.0f, 0.0f, 1.0f};
     GLfloat light2_pos[] = {-5.0f, 15.0f, -8.0f, 1.0f};
@@ -393,4 +397,37 @@ int checkWinCondition(GameState *state)
 void cleanupGame(void)
 {
     cleanupRain();
+}
+
+void drawBackground(void)
+{
+    if (!bg_texture) return;
+    glDisable(GL_LIGHTING);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, bg_texture);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    float mapSize = N_NUM * SIZE;
+    float startX = -mapSize / 5.0f;
+    float startZ = mapSize / 5.0f;
+    float yPos = -30.0f;
+    glPushMatrix();
+    glTranslatef(0.0f, yPos, 0.0f);
+    static float rotationAngle = 0.0f;
+    rotationAngle += 0.2f;
+    glRotatef(rotationAngle, 0.0f, 1.0f, 0.0f);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 0.0f);
+        glVertex3f(startX, yPos, startZ);
+        glTexCoord2f(1.0f, 0.0f);
+        glVertex3f(startX + mapSize, yPos, startZ);
+        glTexCoord2f(1.0f, 1.0f);
+        glVertex3f(startX + mapSize, yPos, startZ + mapSize);
+        glTexCoord2f(0.0f, 1.0f);
+        glVertex3f(startX, yPos, startZ + mapSize);
+    glEnd();
+    
+    glPopMatrix();
+    
+    glDisable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
 }

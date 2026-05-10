@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -I./include
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lopengl32 -lglu32
+LIBS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lopengl32
 TARGET = program.exe
 
 # Források
